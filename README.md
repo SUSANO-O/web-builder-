@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Web Template Builder
+
+A Next.js application that allows users to build web templates through a guided, step-by-step interface. Users can describe their website, select colors, fonts, upload a logo, and choose a layout. The application then generates AI prompts that can be used to create the actual code for the website.
+
+## Features
+
+- Multi-step interface with intuitive navigation
+- Interactive color selector
+- Typography previews
+- Logo upload capability
+- Layout selection with visual previews
+- AI prompt generation based on user selections
+- Template code preview and download functionality
+
+## Tech Stack
+
+- Next.js 15+
+- TypeScript
+- Tailwind CSS
+- Framer Motion for animations
+- React Color for color selection
+- Mantine Dropzone for file uploads
+- JSZip for generating downloadable code archives
+- React Syntax Highlighter for code displaying
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```
+git clone https://github.com/yourusername/web-template-builder.git
+cd web-template-builder
+```
+
+2. Install dependencies:
+```
+npm install
+# or
+yarn install
+```
+
+3. Run the development server:
+```
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                  # Next.js App Router
+│   ├── globals.css       # Global styles
+│   ├── layout.tsx        # Root layout
+│   └── page.tsx          # Home page component
+├── components/
+│   ├── steps/            # Step components for the wizard
+│   │   ├── DescribePage.tsx
+│   │   ├── SelectColor.tsx
+│   │   ├── SelectFont.tsx
+│   │   ├── UploadLogo.tsx
+│   │   ├── ChooseLayout.tsx
+│   │   └── ResultsStep.tsx
+│   ├── ui/               # Reusable UI components
+│   │   ├── Button.tsx
+│   │   ├── Card.tsx
+│   │   └── StepIndicator.tsx
+│   └── Wizard.tsx        # Main wizard component
+├── context/
+│   └── TemplateContext.tsx  # Context for managing wizard state
+├── types/
+│   └── index.ts          # TypeScript type definitions
+└── utils/
+    └── promptGenerator.ts # Utility for generating AI prompts
+```
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+This project is configured for easy deployment to Vercel. Just connect your GitHub repository to Vercel and deploy.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Extending the Project
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Adding New Steps
 
-## Deploy on Vercel
+1. Create a new component in the `src/components/steps` directory
+2. Add the new step ID to the `StepId` type in `src/types/index.ts`
+3. Add the step to the `steps` array in `TemplateContext.tsx`
+4. Add the component to the `stepComponents` mapping in `Wizard.tsx`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Customizing Prompts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Modify the `promptGenerator.ts` file to change how prompts are generated based on user selections.
+
+## License
+
+MIT
