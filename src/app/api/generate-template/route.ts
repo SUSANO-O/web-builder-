@@ -55,11 +55,16 @@ async function generateWebPage(
     Devuelve el código en formato JSON con las claves "html", "css" y "js".
     El código debe ser completo y funcional.
   `;
+  console.log('Generated prompt:', prompt);
 
   try {
+    console.log('Calling AI model...', prompt);
     const result = await model.generateContent(prompt);
+    console.log('Result:', result);
     const response = result.response;
-    const code = JSON.parse(response.text()) as GeneratedCode;
+    const rawText = response.text();
+    console.log('Raw response from AI:', rawText);
+    const code = JSON.parse(rawText) as GeneratedCode;
 
     if (!code.html || !code.css || !code.js) {
       throw new Error('Respuesta incompleta del modelo');
@@ -86,6 +91,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const selections = await request.json() as TemplateSelections;
+    console.log('Received selections:', JSON.stringify(selections, null, 2));
     
     // Validación de datos requeridos
     if (!selections?.description || !selections?.mainColor || !selections?.typography || !selections?.baseDesign) {
