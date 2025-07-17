@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { TemplateSelections, GeneratedPrompt, GeneratedCode, GenerationOutput } from '@/types';
+import { TemplateSelections, GeneratedCode } from '@/types';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 
 const MODEL_NAME = "gemini-1.5-flash-latest"; // Trying another model with -latest suffix
@@ -71,10 +71,10 @@ async function generateWebPage(
     }
 
     return code;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error generando código:', error);
     return {
-      html: `<div class="error">Error generando la página: ${error.message}</div>`,
+      html: `<div class="error">Error generando la página: ${error instanceof Error ? error.message : 'Error desconocido'}</div>`,
       css: '',
       js: ''
     };
@@ -106,10 +106,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ template: code });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error en generate-template:', error);
     return NextResponse.json(
-      { error: `Error del servidor: ${error.message}` },
+      { error: `Error del servidor: ${error instanceof Error ? error.message : 'Error desconocido'}` },
       { status: 500 }
     );
   }

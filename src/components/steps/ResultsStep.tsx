@@ -18,8 +18,10 @@ export default function ResultsStep({ data, onBack }: StepProps) {
 
   useEffect(() => {
     // Generate prompts based on the collected data
-    const generatedPrompts = generatePrompts(data);
-    setPrompts(generatedPrompts);
+    if (data) {
+      const generatedPrompts = generatePrompts(data);
+      setPrompts(generatedPrompts);
+    }
   }, [data]);
 
   const handleGeneratePreview = async () => {
@@ -39,11 +41,11 @@ export default function ResultsStep({ data, onBack }: StepProps) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Generated Template</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=${data.typography.replace(' ', '+')}&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=${data?.typography?.replace(' ', '+') || 'Arial'}\u0026display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    ${data.logoPreview ? `<div class="logo"><img src="logo.png" alt="Logo"></div>` : ''}
+    ${data?.logoPreview ? `<div class="logo"><img src="logo.png" alt="Logo"></div>` : ''}
     <nav>
       <ul>
         <li><a href="#">Home</a></li>
@@ -55,7 +57,7 @@ export default function ResultsStep({ data, onBack }: StepProps) {
   </header>
   <main>
     <section class="hero">
-      <h1>Welcome to ${data.description.split(' ').slice(0, 3).join(' ')}</h1>
+      <h1>Welcome to ${data?.description?.split(' ').slice(0, 3).join(' ') || 'Your Website'}</h1>
       <p>This is a sample template based on your selections.</p>
       <button class="cta">Get Started</button>
     </section>
@@ -68,7 +70,7 @@ export default function ResultsStep({ data, onBack }: StepProps) {
 </body>
 </html>`,
         css: `body {
-  font-family: '${data.typography}', sans-serif;
+  font-family: '${data?.typography || 'Arial'}', sans-serif;
   margin: 0;
   padding: 0;
   color: #333;
@@ -100,7 +102,7 @@ nav a {
 }
 
 .hero {
-  background-color: ${data.primaryColor}10;
+  background-color: ${data?.primaryColor || '#3B82F6'}10;
   padding: 4rem 2rem;
   text-align: center;
 }
@@ -111,7 +113,7 @@ h1 {
 }
 
 .cta {
-  background-color: ${data.primaryColor};
+  background-color: ${data?.primaryColor || '#3B82F6'};
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -166,10 +168,10 @@ This template was generated based on your selections in the Web Template Builder
 3. Edit the files as needed to customize the template further
 
 ## Your Selections
-- Description: ${data.description}
-- Primary Color: ${data.primaryColor}
-- Typography: ${data.typography}
-- Layout: ${data.layout}
+- Description: ${data?.description || 'N/A'}
+- Primary Color: ${data?.primaryColor || 'N/A'}
+- Typography: ${data?.typography || 'N/A'}
+- Layout: ${data?.layout || 'N/A'}
 
 Created with 💙 by Web Template Builder`;
 
@@ -257,7 +259,7 @@ Created with 💙 by Web Template Builder`;
           
           {!templatePreview && !isGeneratingPreview && (
             <div className="p-8 border border-dashed border-gray-300 dark:border-gray-600 rounded-lg text-center text-gray-500 dark:text-gray-400">
-              <p>Select a prompt and click "Generate Preview" to see a template preview</p>
+              <p>Select a prompt and click &quot;Generate Preview&quot; to see a template preview</p>
             </div>
           )}
           

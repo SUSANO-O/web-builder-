@@ -29,10 +29,11 @@ export default function Wizard() {
     'logo': UploadLogo,
     'layout': ChooseLayout,
     'results': ResultsStep
-  };
+  } as const;
 
   // Get current component
-  const CurrentStepComponent = stepComponents[steps[currentStep]];
+  const stepId = steps[currentStep];
+  const CurrentStepComponent = stepComponents[stepId as keyof typeof stepComponents];
 
   // Common props for all step components
   const stepProps = {

@@ -55,7 +55,7 @@ const SelectTypographyStep: React.FC<StepProps> = ({ onNext, onPrevious }) => {
       </div>
        {selections.typography && selections.typography.toLowerCase().includes(' ') && (
         <p className="text-xs text-muted mt-3">
-          Nota: Para fuentes de Google Fonts como "{selections.typography.split(',')[0].replace(/'/g, '')}", asegúrate de que la plantilla generada incluya la importación correcta desde Google Fonts en el HTML.
+          Nota: Para fuentes de Google Fonts como &quot;{selections.typography.split(',')[0].replace(/'/g, '')}&quot;, asegúrate de que la plantilla generada incluya la importación correcta desde Google Fonts en el HTML.
         </p>
       )}
     </div>

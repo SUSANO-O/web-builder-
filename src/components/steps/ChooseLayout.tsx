@@ -27,10 +27,10 @@ const layoutOptions = [
 ];
 
 export default function ChooseLayout({ data, updateData, onNext, onBack }: StepProps) {
-  const selectedLayout = data.layout;
+  const selectedLayout = data?.layout;
 
   const handleLayoutSelect = (layoutId: 'layout1' | 'layout2' | 'layout3') => {
-    updateData({ layout: layoutId });
+    updateData?.({ layout: layoutId });
   };
 
   return (

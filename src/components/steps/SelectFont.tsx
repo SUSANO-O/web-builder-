@@ -17,10 +17,10 @@ const fontOptions = [
 ];
 
 export default function SelectFont({ data, updateData, onNext, onBack }: StepProps) {
-  const selectedFont = data.typography;
+  const selectedFont = data?.typography;
 
   const handleFontSelect = (font: string) => {
-    updateData({ typography: font });
+    updateData?.({ typography: font });
   };
 
   return (

@@ -18,15 +18,15 @@ const predefinedColors = [
 ];
 
 export default function SelectColor({ data, updateData, onNext, onBack }: StepProps) {
-  const [selectedColor, setSelectedColor] = useState(data.primaryColor);
+  const [selectedColor, setSelectedColor] = useState(data?.primaryColor || '#3B82F6');
   const [showColorPicker, setShowColorPicker] = useState(false);
 
-  const handleColorChange = (color: any) => {
+  const handleColorChange = (color: { hex: string }) => {
     setSelectedColor(color.hex);
   };
 
   const handleNext = () => {
-    updateData({ primaryColor: selectedColor });
+    updateData?.({ primaryColor: selectedColor });
     onNext();
   };
 

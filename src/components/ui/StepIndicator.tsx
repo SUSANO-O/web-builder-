@@ -49,7 +49,7 @@ export default function StepIndicator() {
                   )}
                 </div>
                 <span className="mt-1 text-xs font-medium text-gray-600 dark:text-gray-300">
-                  {stepLabels[step]}
+                  {stepLabels[step as keyof typeof stepLabels]}
                 </span>
               </button>
               

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import { StepProps } from '@/types';
@@ -8,14 +9,13 @@ import { StepProps } from '@/types';
 // Simplified dropzone for this example
 interface DropzoneProps {
   onDrop: (files: File[]) => void;
-  maxSize?: number;
   accept?: string[];
   className?: string;
   children: React.ReactNode;
 }
 
 // Simple dropzone implementation instead of using @mantine/dropzone
-function SimpleDropzone({ onDrop, maxSize, accept, className, children }: DropzoneProps) {
+function SimpleDropzone({ onDrop, accept, className, children }: DropzoneProps) {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -58,7 +58,7 @@ function SimpleDropzone({ onDrop, maxSize, accept, className, children }: Dropzo
         if (accept) {
           input.accept = accept.join(',');
         }
-        input.onchange = (e) => handleFileSelect(e as React.ChangeEvent<HTMLInputElement>);
+        input.onchange = (e) => handleFileSelect(e as unknown as React.ChangeEvent<HTMLInputElement>);
         input.click();
       }}
     >
@@ -68,8 +68,8 @@ function SimpleDropzone({ onDrop, maxSize, accept, className, children }: Dropzo
 }
 
 export default function UploadLogo({ data, updateData, onNext, onBack }: StepProps) {
-  const [logoFile, setLogoFile] = useState<File | null>(data.logo || null);
-  const [logoPreview, setLogoPreview] = useState<string>(data.logoPreview || '');
+  const [logoFile, setLogoFile] = useState<File | null>(data?.logo || null);
+  const [logoPreview, setLogoPreview] = useState<string>(data?.logoPreview || '');
   const [error, setError] = useState('');
 
   const handleDrop = (files: File[]) => {
@@ -108,7 +108,7 @@ export default function UploadLogo({ data, updateData, onNext, onBack }: StepPro
   };
 
   const handleNext = () => {
-    updateData({ 
+    updateData?.({ 
       logo: logoFile,
       logoPreview 
     });
@@ -116,7 +116,7 @@ export default function UploadLogo({ data, updateData, onNext, onBack }: StepPro
   };
 
   const handleSkip = () => {
-    updateData({ 
+    updateData?.({ 
       logo: null,
       logoPreview: '' 
     });
@@ -146,7 +146,6 @@ export default function UploadLogo({ data, updateData, onNext, onBack }: StepPro
       {!logoPreview ? (
         <SimpleDropzone
           onDrop={handleDrop}
-          maxSize={5 * 1024 * 1024}
           accept={['image/png', 'image/jpeg', 'image/svg+xml', 'image/webp']}
           className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-10 text-center cursor-pointer bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
         >
@@ -173,10 +172,12 @@ export default function UploadLogo({ data, updateData, onNext, onBack }: StepPro
       ) : (
         <div className="flex flex-col items-center">
           <div className="bg-gray-100 dark:bg-gray-700 p-6 rounded-lg mb-4 max-w-xs">
-            <img 
+            <Image 
               src={logoPreview} 
               alt="Logo Preview" 
-              className="max-h-40 mx-auto" 
+              width={160}
+              height={160}
+              className="max-h-40 mx-auto object-contain" 
             />
           </div>
           <div className="flex space-x-4">

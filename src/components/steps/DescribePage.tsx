@@ -6,7 +6,7 @@ import Button from '@/components/ui/Button';
 import { StepProps } from '@/types';
 
 export default function DescribePage({ data, updateData, onNext }: StepProps) {
-  const [description, setDescription] = useState(data.description);
+  const [description, setDescription] = useState(data?.description || '');
   const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -17,7 +17,7 @@ export default function DescribePage({ data, updateData, onNext }: StepProps) {
       return;
     }
     
-    updateData({ description });
+    updateData?.({ description });
     onNext();
   };
 
@@ -50,7 +50,7 @@ export default function DescribePage({ data, updateData, onNext }: StepProps) {
         {error && <p className="mt-2 text-red-500 text-sm">{error}</p>}
         <div className="mt-4">
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Include details about the purpose, target audience, and key features you'd like to have.
+            Include details about the purpose, target audience, and key features you&apos;d like to have.
           </p>
         </div>
       </form>
